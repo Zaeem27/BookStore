@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<h:outputLabel>Search:</h:outputLabel>
+	    	<h:inputText id="search" value="#{storeBean.searchitem}" required="true">
+	    		<f:validateRegex pattern="^[a-zA-Z0-9]+$" />
+	    	</h:inputText>
+	    	<h:commandButton value="Find" action="#{storeBean.searchAction()}" />
+	    	<h:message for="search" style="color:red" />
+	    	<h:commandButton rendered="#{storeBean.searched}" value="Clear" action="#{storeBean.clearSearch()}"/>
+		</h:form>
+		<br/>
+	    <h:form>
+        <h:dataTable value="#{storeBean.bookList}" var="x"
+          styleClass="book-table"
+          headerClass="book-table-header"
+          rowClasses="book-table-odd-row, book-table-even-row"
+          rendered="#{not storeBean.searched}">
+          <h:column>
+            <f:facet name="header">Book No</f:facet>#{x.bid}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Title</f:facet>#{x.title}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Price</f:facet>#{x.price}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Category</f:facet>#{x.category}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Actions</f:facet>
+            <h:commandButton value="Add to Cart" action="#{storeBean.addAction(x)}" />
+            <h:commandButton value="View Details" action="#{storeBean.viewAction(x)}"/>
+          </h:column>
+        </h:dataTable>
+        <h:dataTable value="#{storeBean.searchList}" var="x"
+          styleClass="book-table"
+          headerClass="book-table-header"
+          rowClasses="book-table-odd-row, book-table-even-row"
+          rendered="#{storeBean.searched}">
+          <h:column>
+            <f:facet name="header">Book No</f:facet>#{x.bid}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Title</f:facet>#{x.title}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Price</f:facet>#{x.price}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Category</f:facet>#{x.category}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Actions</f:facet>
+            <h:commandButton value="Add to Cart" action="#{storeBean.addAction(x)}" />
+            <h:commandButton value="View Details" action="#{storeBean.viewAction(x)}"/>
+          </h:column>
+        </h:dataTable>
+        </h:form>
+	</ui:define>
+</ui:composition>
+</html>

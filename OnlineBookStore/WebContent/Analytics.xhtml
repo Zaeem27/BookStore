@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+	<h:panelGroup rendered="#{loginBean.isAdmin()}">
+	<h:form>
+		<h:commandButton value="General Stats" action="#{analyticBean.showGeneral()}"/>
+		<h:commandButton value="Monthly Sales" action="#{analyticBean.showMonthly()}"/>
+	</h:form>
+	<br/>
+	    <h:dataTable value="#{analyticBean.stats}" var="x"
+          styleClass="book-table"
+          headerClass="book-table-header"
+          rowClasses="book-table-odd-row, book-table-even-row"
+          rendered="#{analyticBean.general}">
+          <h:column>
+            <f:facet name="header">Book No</f:facet>#{x.bid}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Day</f:facet>#{x.day}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Event Type</f:facet>#{x.eventtype}
+          </h:column>
+         </h:dataTable>
+         <h:dataTable value="#{analyticBean.monthlySales.keySet()}" var="x"
+          styleClass="book-table"
+          headerClass="book-table-header"
+          rowClasses="book-table-odd-row, book-table-even-row"
+          rendered="#{analyticBean.monthly}">
+          <h:column>
+            <f:facet name="header">Month</f:facet>#{x}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Number Sold</f:facet>#{analyticBean.monthlySales.get(x)}
+          </h:column>
+         </h:dataTable>
+    </h:panelGroup>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<br />
+		<h:panelGroup rendered="#{loginBean.loggedin}">
+		<h:form>
+			<b>Payment Information:</b>
+			<h:panelGrid columns="3">
+				<h:outputLabel>Card Number</h:outputLabel>
+				<h:inputText id="num" value="#{paymentBean.cardNum}" required="true">
+					<f:validateRegex pattern="^[0-9]+$" />
+					<f:validateLength minimum="6"/>
+				</h:inputText>
+				<h:message for="num" style="color:red" />
+				<h:outputLabel>Expiration Date (MM/YY)</h:outputLabel>
+				<h:inputText id="expdate" value="#{paymentBean.date}" required="true">
+					<f:validateRegex pattern="^(0[1-9]|10|11|12)/[0-9]{2}$" />
+				</h:inputText>
+				<h:message for="expdate" style="color:red" />
+				<h:outputLabel>Security Code (CVV)</h:outputLabel>
+				<h:inputSecret id="code" value="#{paymentBean.cvv}" required="true">
+					<f:validateRegex pattern="^[0-9]{3}$" />
+				</h:inputSecret>
+				<h:message for="code" style="color:red" />
+				<h:outputLabel>Name on Card</h:outputLabel>
+				<h:inputText id="name" value="#{paymentBean.name}" required="true">
+					<f:validateRegex pattern="^[A-Za-z ,'-]+\s[A-Za-z ,'-]+$" />
+				</h:inputText>
+				<h:message for="name" style="color:red" />
+				<h:outputLabel>Street Address</h:outputLabel>
+				<h:inputText id="address" value="#{paymentBean.address}" required="true">
+					<f:validateRegex pattern="^[a-zA-Z\s0-9]+$" />
+				</h:inputText>
+				<h:message for="address" style="color:red" />
+				<h:outputLabel>Zip code</h:outputLabel>
+				<h:inputText id="zip" value="#{paymentBean.zip}" required="true">
+					<f:validateRegex pattern="^[a-zA-Z0-9\s-]+$" />
+					<f:validateLength minimum="6" maximum="7"/>
+				</h:inputText>
+				<h:message for="zip" style="color:red" />
+				<h:outputLabel>Province</h:outputLabel>
+				<h:inputText id="prov" value="#{paymentBean.province}" required="true">
+					<f:validateRegex pattern="^[a-zA-Z]+$" />
+				</h:inputText>
+				<h:message for="prov" style="color:red" />
+				<h:outputLabel>Country</h:outputLabel>
+				<h:inputText id="coun" value="#{paymentBean.country}" required="true">
+					<f:validateRegex pattern="^[a-zA-Z]+$" />
+				</h:inputText>
+				<h:message for="coun" style="color:red" />
+				<h:outputLabel>Phone</h:outputLabel>
+				<h:inputText id="phone" value="#{paymentBean.phone}" required="true">
+					<f:validateRegex pattern="^[0-9-]+$" />
+					<f:validateLength minimum="10" maximum="12"/>
+				</h:inputText>
+				<h:message for="phone" style="color:red" />
+			</h:panelGrid>
+		<h:commandButton value="Pay Now" action="#{paymentBean.pay}" ></h:commandButton>
+		</h:form>
+		<h:outputFormat>#{paymentBean.message}<br/></h:outputFormat>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
+</html>

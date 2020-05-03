@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+	    <h:form>
+	    <h:dataTable value="#{cartBean.cart.keySet()}" var="x"
+	    styleClass="book-table"
+        headerClass="book-table-header"
+        rowClasses="book-table-odd-row, book-table-even-row"
+	    rendered="#{not cartBean.emptycart}">
+	    <h:column>
+            <f:facet name="header">Book No</f:facet>#{x.bid}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Title</f:facet>#{x.title}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Price</f:facet>$#{x.price}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Category</f:facet>#{x.category}
+          </h:column>
+          <h:column>
+          	<f:facet name="header">Number In Cart</f:facet>#{cartBean.cart.get(x)}
+          </h:column>
+          <h:column>
+          	<f:facet name="header">Total Cost</f:facet>$#{cartBean.cart.get(x)*x.price}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Actions</f:facet>
+            <h:commandButton value="Remove 1 Item" action="#{cartBean.removeItem(x)}" />
+            <h:commandButton value="add 1 Item" action="#{cartBean.additem(x)}" />
+            <h:commandButton value="Delete Item" action="#{cartBean.deleteItem(x)}" />
+          </h:column>
+	    </h:dataTable>
+	    <br/>
+	    <h:outputFormat rendered="#{not cartBean.emptycart}">Your Grand Total is: $#{cartBean.getGrandTotal()}</h:outputFormat>
+	    </h:form>
+	    <h:outputFormat rendered="#{cartBean.emptycart}">Cart is empty try adding some books!</h:outputFormat>
+	    <h:form>
+	    <h:commandButton rendered="#{not cartBean.emptycart}" value="Checkout"  action="#{cartBean.checkOut}"/>
+	    </h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,25 @@
+@charset "ISO-8859-1";
+.error{
+	color:red;
+	font-size: 14px;
+}
+.book-table{
+	border-collapse: collapse;
+	border:1px solid #808080;
+}
+.book-table-header{
+  border:1px solid #808080;
+  padding:10px;
+}
+
+.book-table-odd-row{
+  border:1px solid #808080;
+  padding:3px;
+  text-align: center;
+}
+
+.book-table-even-row{
+  border:1px solid #808080;
+  padding:3px;
+  text-align: center;
+}
